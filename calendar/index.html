@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>万年历</title>
+  <style>
+    .calendar {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    .calendar header {
+      display: flex;
+      justify-content: space-around;
+      height: 40px;
+      line-height: 40px;
+      background-color: blueviolet;
+      color: #fff;
+    }
+
+    .calendar header .date {
+      font-size: 30px;
+    }
+
+    .calendar header .op {
+      cursor: pointer;
+    }
+
+    .calendar table {
+      text-align: center;
+      border: 1px solid blueviolet;
+    }
+
+    .calendar table td {
+      height: 30px;
+    }
+
+    .calendar table td.red {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calendar">
+    <header>
+      <span class="op prev">上一月</span>
+      <span class="date"></span>
+      <span class="op next">下一月</span>
+    </header>
+    <table cellpadding="0" cellspacing="0" width="100%" border="1">
+      <thead>
+        <tr>
+          <td class="red">周日</td>
+          <td>周一</td>
+          <td>周二</td>
+          <td>周三</td>
+          <td>周四</td>
+          <td>周五</td>
+          <td class="red">周六</td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+<script>
+  const date = document.querySelector('.date')
+  const tbody = document.querySelector('tbody')
+  const prev = document.querySelector('.prev')
+  const next = document.querySelector('.next')
+  let allTd = []
+  const currenYear = new Date().getFullYear()
+  const currenMonth = new Date().getMonth() + 1
+  const currenDay = new Date().getDate()
+
+  let year = currenYear
+  let month = currenMonth
+
+
+  // 上一月
+  prev.onclick = function () {
+    if (month > 1) {
+      month--
+    } else if (month === 1) {
+      year--
+      month = 12
+    }
+    showDate()
+    getDates()
+  }
+
+  // 下一月
+  next.onclick = function () {
+    month++
+    if (month > 12) {
+      year++
+      month = 1
+    }
+    showDate()
+    getDates()
+  }
+
+  // 显示日期
+  function showDate() {
+    date.innerText = `${year}年${month}月`
+  }
+  showDate()
+
+  // 获取日历对应天数
+  function getDates() {
+    allTd = []
+    tbody.innerHTML = ''
+    for (let i = 0; i < 6; i++) {
+      const tr = document.createElement('tr')
+      tbody.appendChild(tr)
+      for (let j = 0; j < 7; j++) {
+        const td = document.createElement('td')
+        td.innerText = i * 7 + j + 1
+        allTd.push(td)
+        tr.appendChild(td)
+      }
+    }
+    const week = new Date(year, month - 1, 1).getDay() // 每月一号对应星期几
+    const days = new Date(year, month, 0).getDate() // 这个月有多少天--重要知识
+    let n = 0
+    for (let i = 0; i < allTd.length; i++) {
+      if (i >= week && (days + week - 1) >= i) {
+        n++
+        allTd[i].innerText = n
+      } else {
+        allTd[i].innerText = ''
+      }
+    }
+
+    // 最后一行空 删除
+    if (allTd[35].innerText === '') {
+      allTd[35].parentNode.innerHTML = ''
+    }
+    // 当天日期特殊显示
+    if (year === currenYear && month === currenMonth) {
+      allTd[currenDay].style.backgroundColor = 'red'
+      allTd[currenDay].style.color = 'white'
+    }
+  }
+
+  getDates()
+</script>
+
+</html>

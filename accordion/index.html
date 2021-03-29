@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仿京东手风琴</title>
+  <style>
+    body,
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    body {
+      background: #eee;
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 20px;
+    }
+
+    ul li {
+      background: #fff;
+      width: 160px;
+      height: 230px;
+      padding: 30px 20px 40px;
+      box-shadow: 3px 2px 30px rgba(0, 0, 0, .1);
+      position: relative;
+      transition: all .6s ease-out;
+    }
+
+    ul li .title {
+      text-align: center;
+      font-size: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    ul li .subTitle {
+      text-align: center;
+      color: rgb(102, 102, 102);
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    ul li .go {
+      display: none;
+      padding: 5px 0;
+    }
+
+    ul li img {
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      left: 50%;
+      margin-left: -75px;
+      bottom: 40px;
+      transition: all .6s ease-out;
+    }
+
+    ul li.on {
+      width: 390px;
+      background: rgb(104, 189, 250);
+    }
+
+    ul li.on .title {
+      color: #fff;
+      text-align: left;
+    }
+
+    ul li.on .subTitle {
+      color: #fff;
+      text-align: left;
+    }
+
+    ul li.on .go {
+      display: inline-block;
+      color: #fff;
+      text-align: center;
+      border-radius: 30px;
+      background: rgb(50, 140, 227);
+      padding: 5px 24px;
+      margin-top: 33px;
+    }
+
+    ul li.on img {
+      position: absolute;
+      left: auto;
+      right: 20px;
+      bottom: 20px;
+      width: 200px;
+      height: 200px;
+      margin-left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <ul>
+      <li class="on">
+        <a href="#">
+          <div class="title">中国移动自营旗舰店</div>
+          <div class="subTitle">5G流量抢鲜用</div>
+          <div class="go">GO</div>
+          <img src="img/1.webp" alt="">
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class="title">中国电信5G自营旗舰店</div>
+          <div class="subTitle">高速率 大流量 享特权</div>
+          <div class="go">GO</div>
+          <img src="img/2.webp" alt="">
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class="title">中国联通自营旗舰店</div>
+          <div class="subTitle">新品上市 立即办理</div>
+          <div class="go">GO</div>
+          <img src="img/3.webp" alt="">
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class="title">广州电信旗舰店</div>
+          <div class="subTitle">5G抢鲜 宽带惊喜折扣</div>
+          <div class="go">GO</div>
+          <img src="img/4.webp" alt="">
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class="title">北京联通官方旗舰店</div>
+          <div class="subTitle">5G流量限时9折</div>
+          <div class="go">GO</div>
+          <img src="img/5.webp" alt="">
+        </a>
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  const lis = document.querySelectorAll('li')
+  for (let i = 0; i < lis.length; i++) {
+    const li = lis[i]
+    li.onmouseover = function () {
+      const siblings = li.parentNode.childNodes // 知识点 获取父元素下的所有子节点
+      for (let j = 0; j < siblings.length; j++) {
+        if (siblings[j].nodeType === 1) { // 知识点
+          if (siblings[j] === li) {
+            siblings[j].className = 'on'
+          } else {
+            siblings[j].className = ''
+          }
+        }
+      }
+    }
+  }
+</script>
+
+</html>

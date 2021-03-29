@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽奖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 308px;
+      height: 308px;
+      overflow: hidden;
+      margin: 20px;
+    }
+
+    ul {
+      border: 1px solid red;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    li {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      border: 1px solid red;
+      order: 1;
+    }
+
+    li:nth-child(4) {
+      order: 4;
+    }
+
+    li:nth-child(5) {
+      order: 7;
+    }
+
+    li:nth-child(6) {
+      order: 6;
+    }
+
+    li:nth-child(7) {
+      order: 5;
+    }
+
+    li:nth-child(8) {
+      order: 2;
+    }
+
+    li.btn {
+      background-color: aqua;
+      cursor: pointer;
+      order: 3;
+    }
+
+    li.red {
+      background-color: red;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <ul>
+      <li class="item">一等奖</li>
+      <li class="item">二等奖</li>
+      <li class="item">三等奖</li>
+      <li class="item">四等奖</li>
+      <li class="item">五等奖</li>
+      <li class="item">六等奖</li>
+      <li class="item">七等奖</li>
+      <li class="item">八等奖</li>
+      <li class="btn">
+        开始
+      </li>
+    </ul>
+  </div>
+  <h2 id="con"></h2>
+
+  <script>
+    const btn = document.querySelector('.btn')
+    const con = document.querySelector('#con')
+    const items = document.querySelectorAll('.item')
+    let timer = null
+    let flag = false
+    btn.onclick = function () {
+      if (flag) return
+      flag = true
+      const idx = Math.ceil(Math.random() * 8 + 24) // 至少转3圈
+
+      let k = 0
+      timer = setInterval(() => {
+        for (let i = 0; i < items.length; i++) {
+          items[i].className = ''
+        }
+        items[k % 8].className = 'red'
+        k++
+        if (idx - 1 === k) {
+          clearInterval(timer)
+          flag = false
+          const number = k % 8 ? k % 8 : 8
+          const prizes = ['一', '二', '三', '四', '五', '六', '七', '八']
+          con.innerText = `恭喜您获得 ${prizes[number - 1]}等奖`
+        }
+      }, 80)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>省市区三级联动</title>
+</head>
+
+<body>
+  <p>
+    省: <select name="province" id="province">
+      <option value="">请选择</option>
+    </select>
+    市: <select name="city" id="city"></select>
+    区: <select name="district" id="district"></select>
+  </p>
+  你选择的是:
+  <h1 id="con"></h1>
+
+  <script src="city.js"></script>
+  <script>
+    const province = document.getElementById('province')
+    const city = document.getElementById('city')
+    const district = document.getElementById('district')
+    const con = document.getElementById('con')
+
+    areas.forEach(it => {
+      province.add(new Option(it.name))
+    })
+
+    let cities = [], districts = []
+
+    // 选择省
+    let provinceIndex = 0
+    province.onchange = function () {
+      provinceIndex = this.selectedIndex - 1
+      city.options.length = 0 // 市置空
+      district.options.length = 0 // 区置空
+      if (provinceIndex !== -1) {
+        cities = areas[provinceIndex].city
+        cities.forEach(it => {
+          city.add(new Option(it.name))
+        })
+        districts = cities[0].districtAndCounty
+        districts.forEach(it => {
+          district.add(new Option(it))
+        })
+        con.innerText = areas[provinceIndex].name + cities[0].name + districts[0]
+      } else {
+        con.innerText = ''
+      }
+    }
+
+    // 选择市
+    let cityIndex = 0
+    city.onchange = function () {
+      district.options.length = 0 // 区置空
+      cityIndex = this.selectedIndex
+      districts = cities[cityIndex].districtAndCounty
+      districts.forEach(it => {
+        district.add(new Option(it))
+      })
+      con.innerText = areas[provinceIndex].name + cities[cityIndex].name + districts[0]
+    }
+
+    // 选择区
+    let districtIndex = 0
+    district.onchange = function () {
+      districtIndex = this.selectedIndex
+      con.innerText = areas[provinceIndex].name + cities[cityIndex].name + districts[districtIndex]
+    }
+  </script>
+</body>
+
+</html>

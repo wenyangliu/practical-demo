@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时钟</title>
+  <style>
+    .clock {
+      width: 200px;
+      height: 200px;
+      border: 10px solid darkgray;
+      background-color: lightgray;
+      position: relative;
+      border-radius: 50%;
+      /* margin: 0 auto; */
+    }
+
+    .mark {
+      position: absolute;
+      background-color: darkgray;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .twelve {
+      left: 95px;
+    }
+
+    .third {
+      top: 95px;
+      right: 0;
+    }
+
+    .six {
+      left: 95px;
+      bottom: 0;
+    }
+
+    .nine {
+      top: 95px;
+    }
+
+    .center {
+      position: absolute;
+      background-color: darkgray;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      left: 90px;
+      top: 90px;
+    }
+
+    .hand {
+      position: absolute;
+      border-radius: 0 50% 50% 0;
+      transform-origin: 0;
+    }
+
+    .hour {
+      width: 60px;
+      height: 10px;
+      background-color: #000;
+      left: 100px;
+      top: 95px;
+    }
+
+    .minute {
+      width: 80px;
+      height: 8px;
+      background-color: blue;
+      left: 100px;
+      top: 96px;
+    }
+
+    .second {
+      width: 95px;
+      height: 5px;
+      background-color: red;
+      left: 100px;
+      top: 96px;
+    }
+
+    .weekday {
+      position: absolute;
+      right: 20px;
+      top: 90px;
+    }
+
+    .weekday span {
+      background-color: #fff;
+      margin: 3px;
+    }
+
+    .time {
+      position: absolute;
+      background-color: #fff;
+      left: 70px;
+      bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clock">
+    <div class="mark twelve"></div>
+    <div class="mark third"></div>
+    <div class="mark six"></div>
+    <div class="mark nine"></div>
+    <div class="weekday"><span>28</span><span>三</span></div>
+    <div class="time">12:30:58</div>
+    <div class="hand hour"></div>
+    <div class="hand minute"></div>
+    <div class="hand second"></div>
+    <div class="center"></div>
+  </div>
+
+  <script>
+    const hands = document.querySelectorAll('.hand')
+    const time = document.querySelector('.time')
+    const weekday = document.querySelector('.weekday')
+    const spans = weekday.querySelectorAll('span')
+
+    function clock() {
+      const now = new Date()
+      const days = ['日', '一', '二', '三', '四', '五', '六']
+      const date = now.getDate()
+      const day = now.getDay()
+      spans[0].innerHTML = date
+      spans[1].innerHTML = days[day]
+      const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds()
+      time.innerHTML = `${formatTime(h)}:${formatTime(m)}:${formatTime(s)}`
+
+      // 注意这里初始位置是90度位置3点方向，所以要减去90度
+      const sRot = s * 6 - 90
+      const mRot = (m + s / 60) * 6 - 90
+      const hRot = (h % 12 + m / 60) * 30 - 90
+      hands[2].style.transform = `rotate(${sRot}deg)`
+      hands[1].style.transform = `rotate(${mRot}deg)`
+      hands[0].style.transform = `rotate(${hRot}deg)`
+    }
+
+    function formatTime(t) {
+      return t < 10 ? `0${t}` : t
+    }
+    clock()
+    setInterval(clock, 1000)
+  </script>
+</body>
+
+</html>
