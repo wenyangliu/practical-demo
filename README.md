@@ -18,3 +18,19 @@
 
 ### 时钟-clock
 ![时钟](https://i.loli.net/2021/03/29/nzGCRQY5NlKpXcu.gif)
+
+### 仿小米购物车-shopcart
+
+### 旋转木马-carousel
+![旋转木马](https://i.loli.net/2021/04/15/OLTmwCHAhBdE5UI.gif)
+
+### 遮罩层动画-mask-animation
+![遮罩层动画](https://i.loli.net/2021/04/15/YJRvW26aDQzjGcp.gif)
+
+### 碰撞检测-collision
+![碰撞检测](https://i.loli.net/2021/04/15/tGNhnmc2q4QyfSH.gif)
+
+### 吸附效果-adsorption
+![吸附效果](https://i.loli.net/2021/04/15/69kcfBENG1yQ5FW.gif)
+
+

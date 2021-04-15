@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碰撞检测</title>
+  <style>
+    .move {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position: absolute;
+      left: 200px;
+      top: 300px;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: lightgray;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      /* transform: translate(-50%, -50%); */
+      /*不能写这个*/
+      margin-left: -100px;
+      margin-top: -100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="box"></div>
+    <div class="move"></div>
+  </div>
+
+  <script>
+    const box = document.querySelector('.box')
+    const move = document.querySelector('.move')
+
+
+    move.onmousedown = function (e) {
+      const ev = e || window.event
+      const diffX = ev.clientX - move.offsetLeft
+      const diffY = ev.clientY - move.offsetTop
+
+      document.onmousemove = function (e) {
+        const ev = e || window.event
+        const left = ev.clientX - diffX
+        const top = ev.clientY - diffY
+        move.style.left = left + 'px'
+        move.style.top = top + 'px'
+
+        // 检测
+        if (left + move.offsetWidth < box.offsetLeft
+          || left > box.offsetLeft + box.offsetWidth
+          || top + move.offsetHeight < box.offsetTop
+          || top > box.offsetTop + box.offsetHeight
+        ) {
+          console.log('没有碰到')
+          box.style.backgroundColor = 'lightgray'
+        } else {
+          console.log('碰到')
+          box.style.backgroundColor = 'orange'
+        }
+      }
+      document.onmouseup = function (e) {
+        this.onmousemove = null
+        this.onmouseup = null
+      }
+
+    }
+  </script>
+</body>
+
+</html>
