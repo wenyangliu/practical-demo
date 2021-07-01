@@ -33,4 +33,7 @@
 ### 吸附效果-adsorption
 ![吸附效果](https://i.loli.net/2021/04/15/69kcfBENG1yQ5FW.gif)
 
+### 新拟态计算器-calculator
+
+### 翻页时钟-flip-clock
 
